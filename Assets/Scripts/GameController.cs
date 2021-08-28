@@ -47,13 +47,13 @@ public class GameController : MonoBehaviour
             //построить маршрут патрулирования
             Queue<Vector3> path = new Queue<Vector3>();
             for (int j = 0; j < enemyPathVerticesCount; j++)
-                path.Enqueue(i == 0 //враги спавнятся на случайных позициях из разных диапазонов
-                    ? maze.getRandomEmptyPosition(0, 10, 7, 10)
-                    : maze.getRandomEmptyPosition(7, 10, 0, 10));
+                path.Enqueue(maze.getRandomEmptyPosition(0, 10, 0, 10));
 
             //настроить врага
             GameObject enemy = Instantiate(enemyPrefab, transform);
-            enemy.transform.position = path.Peek();
+            enemy.transform.position = i == 0 //враги спавнятся на случайных позициях из разных диапазонов
+                    ? maze.getRandomEmptyPosition(0, 10, 7, 10)
+                    : maze.getRandomEmptyPosition(7, 10, 0, 10);
             enemy.GetComponent<EnemyScript>().nav = nav.Clone();
             enemy.GetComponent<EnemyScript>().path = path;
         }
